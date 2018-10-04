@@ -51,6 +51,14 @@ def start_worker(request):
                 {
                     'key': 'task_id',
                     'value': task_id
+                },
+                {
+                    'key': 'task_image',
+                    'value': 'task_image'
+                },
+                {
+	            'key': 'startup-script',
+    	            'value': 'startup script goes here'
                 }
             ]
         }
