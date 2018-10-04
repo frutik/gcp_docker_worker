@@ -15,8 +15,8 @@
   "provisioners": [
       {
         "type": "file",
-        "source": "1",
-        "destination": "/tmp/1"
+        "source": "worker.sh",
+        "destination": "/tmp/worker.sh"
       },
       {
         "type": "shell",
