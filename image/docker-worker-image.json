@@ -1,0 +1,26 @@
+{
+  "builders": [
+    {
+      "type": "googlecompute",
+      "account_file": "account.json",
+      "project_id": "pacific-vault-218409",
+      "source_image": "ubuntu-1604-xenial-v20180814",
+      "image_name": "docker-worker-{{ timestamp }}",
+      "disk_size": 10,
+      "ssh_username": "root",
+      "zone": "us-west1-a",
+      "image_family": "docker-worker"
+    }
+  ],
+  "provisioners": [
+      {
+        "type": "file",
+        "source": "1",
+        "destination": "/tmp/1"
+      },
+      {
+        "type": "shell",
+        "script": "docker-worker-install.sh"
+      }
+  ] 
+}
