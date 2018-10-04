@@ -13,6 +13,8 @@ def start_worker(request):
     project = 'pacific-vault-218409'  # TODO: Update placeholder value.
     zone = 'us-east1-b'
     family = 'docker-worker'	
+    task_id = family + str(int(time.time()))
+
 
     image_response = service.images().getFromFamily(
         project=project, family=family).execute()
@@ -20,7 +22,7 @@ def start_worker(request):
     
     instance_body = {
         "kind": "compute#intance",
-        "name": family + str(int(time.time())),
+        "name": task_id,
         'machineType': 'projects/{0}/zones/{1}/machineTypes/{2}'.format(prohect, zone, 'f1-micro'),
         'disks': [
             {
@@ -47,8 +49,8 @@ def start_worker(request):
         'metadata': {
             'items': [
                 {
-                    'key': 'frutik',
-                    'value': 'frutik'
+                    'key': 'task_id',
+                    'value': task_id
                 }
             ]
         }
