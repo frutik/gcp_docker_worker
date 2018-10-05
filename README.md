@@ -1,6 +1,13 @@
+TASK:
+
+- start high performant (and expensive) instance
+- do the job
+- shutdown the instance as soon as job done
+- profit
+
 FLOW:
 
-external system -> pubsub topic / web hook -> cloud function (create/start worker instance) -> compute engine (pull details of task from the metadata server) -> docker execute (pull image from the registry) -> pubsub topic -> cloud function (destroy worker instance)
+external system -> pubsub topic / web hook -> cloud function (create/start worker instance, pull details of the insance from the metadata server) -> compute engine (pull details of task from the metadata server) -> docker execute (pull image from the registry) -> pubsub topic -> cloud function (destroy worker instance)
 
 PARTS:
 
