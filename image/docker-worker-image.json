@@ -16,7 +16,7 @@
       {
         "type": "file",
         "source": "worker.sh",
-        "destination": "/tmp/worker.sh"
+        "destination": "/opt/worker.sh"
       },
       {
         "type": "shell",

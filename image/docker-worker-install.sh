@@ -3,4 +3,4 @@
 apt-get update
 apt-get install -y docker.io
 
-chmod +x /tmp/worker.sh
+chmod +x /opt/worker.sh
