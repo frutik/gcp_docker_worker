@@ -11,7 +11,7 @@ external system -> pubsub topic / web hook (request to start job's execution) ->
 
 PARTS:
 
-- image: packer stuff for a base image of the worker
+- image: packer stuff for a base image of the worker (adds mostly docker support and cloud-init stuff)
 - cloud_functions: source code of the functions
 
 TODO:
