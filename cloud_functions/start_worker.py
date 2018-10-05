@@ -1,4 +1,5 @@
 import time
+import os
 
 from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
@@ -10,20 +11,20 @@ def start_worker(request):
 
     service = discovery.build('compute', 'v1', credentials=credentials)
 
-    project = 'pacific-vault-218409'  # TODO: Update placeholder value.
-    zone = 'us-east1-b'
-    family = 'docker-worker'	
-    task_id = family + str(int(time.time()))
-
+    project = os.environ.get('GCP_PROJECT', '') 
+    worker_zone = os.environ.get('WORKER_ZONE', '')
+    worker_type = os.environ.get('WORKER_TYPE', '')
+    worker_family = os.environ.get('WORKER_IMAGE', '')
+    task_id = family + '-' + str(int(time.time()))
 
     image_response = service.images().getFromFamily(
-        project=project, family=family).execute()
+        project=project, family=worker_family).execute()
     source_disk_image = image_response['selfLink']
     
-    instance_body = {
+    instance_config = {
         "kind": "compute#intance",
         "name": task_id,
-        'machineType': 'projects/{0}/zones/{1}/machineTypes/{2}'.format(prohect, zone, 'f1-micro'),
+        'machineType': 'projects/{0}/zones/{1}/machineTypes/{2}'.format(prohect, worker_zone, worker_type),
         'disks': [
             {
                 'boot': True,
@@ -43,28 +44,33 @@ def start_worker(request):
             'email': 'default',
             'scopes': [
                 'https://www.googleapis.com/auth/devstorage.read_write',
-                'https://www.googleapis.com/auth/logging.write'
+                'https://www.googleapis.com/auth/logging.write',
+                'https://www.googleapis.com/auth/pubsub'		    
             ]
         }],
         'metadata': {
             'items': [
                 {
+                    'key': 'startup-script',
+                    'value': '#!/bin/bash\n\n/opt/worker.sh'
+                },
+                {
+                    'key': 'project',
+                    'value': project
+                },
+                {
+                    'key': 'reporting_topic',
+                    'value': 'task_finished'
+                },
+                {
                     'key': 'task_id',
                     'value': task_id
-                },
-                {
-                    'key': 'task_image',
-                    'value': 'task_image'
-                },
-                {
-	            'key': 'startup-script',
-    	            'value': 'startup script goes here'
-                }
-            ]
+                }            
+	    ]
         }
     }
 
-    request = service.instances().insert(project=project, zone=zone, body=instance_body)
+    request = service.instances().insert(project=project, zone=worker_zone, body=instance_config)
     response = request.execute()
 
     # TODO: Change code below to process the `response` dict:
