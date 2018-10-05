@@ -1,6 +1,7 @@
 TASK:
 
 - start high performant (and expensive) instance
+- pull docker image with a worker application
 - do the job
 - shutdown the instance as soon as job done
 - profit
