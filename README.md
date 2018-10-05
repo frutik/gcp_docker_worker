@@ -1,3 +1,12 @@
+FLOW:
+
+external system -> pubsub topic / web hook -> cloud function (create/start worker instance) -> compute engine -> docker execute -> pubsub topic -> cloud function (destroy worker instance)
+
+PARTS:
+
+- image: packer stuff for a base image of the worker
+- cloud_functions: source code of the functions
+
 TODO:
 
 - add docker stuff (registry, image)
