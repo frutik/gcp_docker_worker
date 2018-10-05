@@ -17,7 +17,6 @@ PARTS:
 
 TODO:
 
-- add docker stuff (registry, image)
 - keep source of the functions in a gcp repository 
 - terraform stuff to create/manage cloud functions, source repository, docker registry etc
 - understand how to track if docker exec was succesfull (handle exit codes of docker?)
