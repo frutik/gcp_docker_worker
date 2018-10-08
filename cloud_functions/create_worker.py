@@ -1,4 +1,5 @@
 import time
+import datetime
 import os
 
 from googleapiclient import discovery
@@ -6,25 +7,29 @@ from oauth2client.client import GoogleCredentials
 from pprint import pprint
 
 
-def start_worker(request):
+def hello_world(request):
     credentials = GoogleCredentials.get_application_default()
 
     service = discovery.build('compute', 'v1', credentials=credentials)
 
-    project = os.environ.get('GCP_PROJECT', '') 
-    worker_zone = os.environ.get('WORKER_ZONE', '')
-    worker_type = os.environ.get('WORKER_TYPE', '')
-    worker_family = os.environ.get('WORKER_IMAGE', '')
-    task_id = family + '-' + str(int(time.time()))
+    project = os.environ.get('GCP_PROJECT', '')
+    zone = os.environ.get('WORKER_ZONE', '')
+    type = os.environ.get('WORKER_TYPE', '')
+    family = os.environ.get('WORKER_IMAGE', '')
+    docker_image = os.environ.get('TASK_IMAGE', 'hello-world')
+    task_id = '{0}-{1}-{2}'.format(
+        family,
+        datetime.date.today(),
+        int(time.time()))
 
     image_response = service.images().getFromFamily(
-        project=project, family=worker_family).execute()
+        project=project, family=family).execute()
     source_disk_image = image_response['selfLink']
-    
-    instance_config = {
+
+    instance_body = {
         "kind": "compute#intance",
         "name": task_id,
-        'machineType': 'projects/{0}/zones/{1}/machineTypes/{2}'.format(prohect, worker_zone, worker_type),
+        'machineType': 'projects/{0}/zones/{1}/machineTypes/{2}'.format(project, zone, type),
         'disks': [
             {
                 'boot': True,
@@ -45,7 +50,7 @@ def start_worker(request):
             'scopes': [
                 'https://www.googleapis.com/auth/devstorage.read_write',
                 'https://www.googleapis.com/auth/logging.write',
-                'https://www.googleapis.com/auth/pubsub'		    
+                'https://www.googleapis.com/auth/pubsub'
             ]
         }],
         'metadata': {
@@ -63,15 +68,18 @@ def start_worker(request):
                     'value': 'task_finished'
                 },
                 {
+                    'key': 'task_image',
+                    'value': docker_image
+                },
+                {
                     'key': 'task_id',
                     'value': task_id
-                }            
-	    ]
+                }
+            ]
         }
     }
 
-    request = service.instances().insert(project=project, zone=worker_zone, body=instance_config)
+    request = service.instances().insert(project=project, zone=zone, body=instance_body)
     response = request.execute()
 
-    # TODO: Change code below to process the `response` dict:
     pprint(response)

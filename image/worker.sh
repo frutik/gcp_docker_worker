@@ -5,16 +5,12 @@ TASK_ID=$(curl http://metadata/computeMetadata/v1/instance/attributes/task_id -H
 TASK_IMAGE=$(curl http://metadata/computeMetadata/v1/instance/attributes/task_image -H "Metadata-Flavor: Google")
 REPORTING_TOPIC=$(curl http://metadata/computeMetadata/v1/instance/attributes/reporting_topic -H "Metadata-Flavor: Google")
 
-# start docker process
-
 gcloud logging write docker-worker "Docker task ${TASK_ID} started" --severity=WARNING
 
-RESULT="docker run $TASK_IMAGE"
-
+RESULT=`sudo docker run $TASK_IMAGE`
 # control return code? or handle errors inside app?
 
-# log and send signal to destroy this instance
-
-gcloud logging write docker-worker $RESULT --severity=WARNING
+gcloud logging write docker-worker "${RESULT}" --severity=WARNING
 gcloud logging write docker-worker "Docker task ${TASK_ID} finished" --severity=WARNING
-gcloud pubsub topics publish projects/${GCP_PROJECT}/topics/${REPORTING_TOPIC} --message 'test'
+gcloud pubsub topics publish projects/${GCP_PROJECT}/topics/${REPORTING_TOPIC} --message "${TASK_ID}"
+
