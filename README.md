@@ -1,6 +1,7 @@
 TASK:
 
 - start high performant (and expensive) instance
+- pull docker image with a worker application
 - do the job
 - shutdown the instance as soon as job done
 - profit
@@ -16,7 +17,6 @@ PARTS:
 
 TODO:
 
-- add docker stuff (registry, image)
 - keep source of the functions in a gcp repository 
 - terraform stuff to create/manage cloud functions, source repository, docker registry etc
 - understand how to track if docker exec was succesfull (handle exit codes of docker?)
