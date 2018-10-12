@@ -20,3 +20,12 @@ TODO:
 - keep source of the functions in a gcp repository 
 - terraform stuff to create/manage cloud functions, source repository, docker registry etc
 - understand how to track if docker exec was succesfull (handle exit codes of docker?)
+
+HOW TO INSTALL MANUALLY
+
+- create service account with EDITOR permissions
+- create/download json key credentianl. save it as image/account.json
+- adjust project's name and zone in a image/docker-worker-image.json
+- build base image cd image && sh build-image.sh
+- create two cloud functions
+- MORE IS COMMING
