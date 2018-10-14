@@ -19,6 +19,11 @@
         "destination": "/opt/worker.sh"
       },
       {
+        "type": "file",
+        "source": "worker.env",
+        "destination": "/opt/worker.env"
+      },
+      {
         "type": "shell",
         "script": "docker-worker-install.sh"
       }
