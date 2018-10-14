@@ -1,14 +1,19 @@
 {
+  "variables": {
+    "gcp_account_file": "{{ env `ACCOUNT_FILE` }}",
+    "gcp_project_id": "{{ env `PROJECT_ID` }}",
+    "gcp_zone": "{{ env `ZONE` }}"
+  },
   "builders": [
     {
       "type": "googlecompute",
-      "account_file": "account.json",
-      "project_id": "pacific-vault-218409",
+      "account_file": "{{ user `gcp_account_file` }}",
+      "project_id": "{{ user `gcp_project_id` }}",
       "source_image": "ubuntu-1604-xenial-v20180814",
       "image_name": "docker-worker-{{ timestamp }}",
       "disk_size": 10,
       "ssh_username": "root",
-      "zone": "us-west1-a",
+      "zone": "{{ user `gcp_zone` }}",
       "image_family": "docker-worker"
     }
   ],
