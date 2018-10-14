@@ -1,1 +1,1 @@
-packer build docker-worker-image.json
+ACCOUNT_FILE="${ACCOUNT_FILE:-account.json}" ZONE="${ZONE:-us-west1-a}" packer build docker-worker-image.json
