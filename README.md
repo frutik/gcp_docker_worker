@@ -25,7 +25,6 @@ HOW TO INSTALL MANUALLY
 
 - create service account with EDITOR permissions
 - create/download json key credentianl. save it as image/account.json
-- adjust project's name and zone in a image/docker-worker-image.json
-- build base image cd image && sh build-image.sh
+- build base image cd image && PROJECT_ID="your-project-id" ACCOUNT_FILE="account.json" ZONE="us-west1-a" ./build-images.sh
 - create two cloud functions
 - MORE IS COMMING
