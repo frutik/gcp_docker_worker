@@ -3,7 +3,7 @@
     {
       "type": "googlecompute",
       "account_file": "account.json",
-      "project_id": "pacific-vault-218409",
+      "project_id": "belvilla-search-engine-staging",
       "source_image": "ubuntu-1604-xenial-v20180814",
       "image_name": "docker-worker-{{ timestamp }}",
       "disk_size": 10,
@@ -17,6 +17,11 @@
         "type": "file",
         "source": "worker.sh",
         "destination": "/opt/worker.sh"
+      },
+      {
+        "type": "file",
+        "source": "worker.env",
+        "destination": "/opt/worker.env"
       },
       {
         "type": "shell",

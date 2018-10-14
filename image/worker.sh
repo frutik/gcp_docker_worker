@@ -1,9 +1,6 @@
 #!/bin/bash
 
-GCP_PROJECT=$(curl http://metadata/computeMetadata/v1/instance/attributes/project -H "Metadata-Flavor: Google")
-TASK_ID=$(curl http://metadata/computeMetadata/v1/instance/attributes/task_id -H "Metadata-Flavor: Google")
-TASK_IMAGE=$(curl http://metadata/computeMetadata/v1/instance/attributes/task_image -H "Metadata-Flavor: Google")
-REPORTING_TOPIC=$(curl http://metadata/computeMetadata/v1/instance/attributes/reporting_topic -H "Metadata-Flavor: Google")
+source /opt/worker.env
 
 gcloud logging write docker-worker "Docker task ${TASK_ID} started" --severity=WARNING
 
