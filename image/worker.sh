@@ -4,8 +4,6 @@ source /opt/worker.env
 
 gcloud logging write docker-worker "Docker task ${TASK_ID} started" --severity=WARNING
 
-SHARED_FILES="/tmp/worker"
-
 mkdir ${SHARED_FILES}
 
 if [ "$SHARED_BUCKET" != "$T2" ]; then
