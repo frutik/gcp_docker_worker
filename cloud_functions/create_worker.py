@@ -16,6 +16,7 @@ def hello_world(request):
     zone = os.environ.get('WORKER_ZONE', 'europe-west1-b')  # redefine default in metadata
     type = os.environ.get('WORKER_TYPE', 'f1-micro')  # redefine default in metadata
     family = os.environ.get('WORKER_IMAGE', 'docker-worker')  # redefine default in metadata
+    shared_bucket = os.environ.get('SHARED_BUCKET', '')  # (optional) redefine default in metadata
     docker_image = os.environ.get('TASK_IMAGE', 'hello-world')  # redefine default in metadata
     task_id = '{0}-{1}-{2}'.format(
         family,
@@ -67,6 +68,10 @@ def hello_world(request):
                 {
                     'key': 'reporting_topic',
                     'value': 'task_finished'
+                },
+                {
+                    'key': 'shared_bucket',
+                    'value': 'shared_bucket'
                 },
                 {
                     'key': 'task_image',
