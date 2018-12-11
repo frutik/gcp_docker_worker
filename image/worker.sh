@@ -6,7 +6,7 @@ gcloud logging write docker-worker "Docker task ${TASK_ID} started" --severity=W
 
 mkdir ${SHARED_FILES}
 
-if [ "$SHARED_BUCKET" != "$T2" ]; then
+if [ "$SHARED_BUCKET" != "" ]; then
   gsutil rsync -r -d  gs://${SHARED_BUCKET}/ ${SHARED_FILES}
 fi
 
