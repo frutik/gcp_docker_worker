@@ -1,8 +1,8 @@
-About:
+# About
 
 We are doing full import of the big database into Elasticsearch every day. To convert our input data into a final documents a lot of resource has to be involved. Previously, we were using very expensive bare-metal server to do a job, paying for it at 24/365 basis. Our goal was to optimize expenses and pay for the hight-performant instance only when we need it - 30 min a day. And this code is proof of concept to achieve the goal on the Google Cloud Platform (involving as much GCP feature/services as needed/possible).
 
-TASK:
+## TASK:
 
 - start high performant (and expensive) instance
 - pull docker image with a worker application
@@ -10,30 +10,30 @@ TASK:
 - shutdown the instance as soon as job done
 - profit
 
-FLOW:
+# Flow
 
 external system -> pubsub topic / web hook (request to start job's execution) -> cloud function (create/start worker instance, pull details of the insance from the metadata server) -> compute engine (pull details of task from the metadata server) -> docker execute (pull image from the registry) -> pubsub topic -> cloud function (destroy worker instance)
 
-PARTS:
+# Parts
 
 - image: packer stuff for a base image of the worker (adds mostly docker support and cloud-init stuff)
 - cloud_functions: source code of the functions
 
-TODO:
+# TODO
 
 - keep source of the functions in a gcp repository 
 - terraform stuff to create/manage cloud functions, source repository, docker registry etc
 - understand how to track if docker exec was succesfull (handle exit codes of docker?)
 
-HOW TO INSTALL MANUALLY
+# HOWTOs 
+
+## Manuall installation
 
 - create service account with EDITOR permissions
 - create/download json key credentianl. save it as image/account.json
 - build base image cd image && PROJECT_ID="your-project-id" ACCOUNT_FILE="account.json" ZONE="us-west1-a" ./build-images.sh
 - create two cloud functions
 - MORE IS COMMING
-
-HOWTOs
 
 ## If you wanna have some files (for example custom ssl certs for the encription) inside a docker container
 
