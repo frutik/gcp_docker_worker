@@ -1,3 +1,7 @@
+About:
+
+We are doing full import of the big database into Elasticsearch every day. To convert our input data into a final documents a lot of resource has to be involved. Previously, we were using very expensive bare-metal server to do a job, paying for it at 24/365 basis. Our goal was to optimize expenses and pay for the hight-performant instance only when we need it - 30 min a day. And this code is proof of concept to achieve the goal on the Google Cloud Platform (involving as much GCP feature/services as needed/possible).
+
 TASK:
 
 - start high performant (and expensive) instance
