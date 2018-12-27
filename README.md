@@ -4,8 +4,8 @@ We are doing full import of the big database into Elasticsearch every day. To co
 
 ## TASK:
 
-- start high performant (and expensive) instance
-- pull docker image with a worker application
+- start high performant (and expensive) instance in a GCE.
+- pull docker image with a worker application (Public DockerHub registry and private/public GCP rigistries supported at the moment).
 - do the job
 - shutdown the instance as soon as job done
 - profit
